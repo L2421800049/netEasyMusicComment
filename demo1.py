@@ -1,8 +1,6 @@
 import json
-
 import execjs
 import os
-
 import requests
 
 
@@ -59,14 +57,13 @@ class NetEasyMusicComent:
                 exit(0)
 
     def lyric(self,):
-        info = {
+        self.info = {
             'id': self.id,
             'lv': -1,
             'tv': -1,
             'csrf_token': ''
         }
-        # self.info = json.dumps(info)
-        # print(self.info)
+
         res = self.getInfo()
         print(res)
         resp = requests.post(
@@ -74,16 +71,11 @@ class NetEasyMusicComent:
             headers = {
                 "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36 Edg/92.0.902.55" ,
                 "content-type": "application/x-www-form-urlencoded",
-                # "referer": "https://music.163.com/song?id=%s"%self.id,
-                # "origin": "https://music.163.com",
-                # "accept": "*/*",
-                # "accept-encoding": "gzip, deflate, br",
-                # "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
             },
             data=res
         )
         print(resp.status_code)
-        print(resp.text)
+        print(resp.json()['lrc']['lyric'])
 
     def main(self):
        self.comment()
